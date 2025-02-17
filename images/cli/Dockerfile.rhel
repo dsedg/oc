@@ -1,9 +1,7 @@
 FROM registry.ci.openshift.org/openshift/release:rhel-9-release-golang-1.23-openshift-4.19 AS builder
 WORKDIR /go/src/github.com/openshift/oc
 COPY . .
-RUN rm .git
-COPY gitinfo /go/src/github.com/openshift/oc/.git
-RUN  sed -i '/worktree/d' .git/config
+
 RUN make build --warn-undefined-variables
 
 FROM ghcr.io/dsedg/base:latest
